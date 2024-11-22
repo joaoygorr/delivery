@@ -20,10 +20,9 @@ public class DeliveryAssignmentServiceImpl implements DeliveryAssignmentService 
     }
 
     @Override
-    public Delivery assignDelivery(Long orderId, String destinationAddress) {
+    public Delivery assignDelivery(String destinationAddress) {
         Driver availableDriver = driverRepository.findByAvailableTrue().stream().findFirst().orElseThrow(
-                () -> new RuntimeException("Nenhum entregador disponível.")
-        );
+                () -> new RuntimeException("Nenhum entregador disponível."));
 
         availableDriver.setAvailable(false);
         driverRepository.save(availableDriver);

@@ -4,5 +4,5 @@ import com.br.fiap.delivery.module.Delivery;
 
 public interface DeliveryAssignmentService {
 
-    Delivery assignDelivery(Long orderId, String destinationAddress);
+    Delivery assignDelivery(String destinationAddress);
 }
