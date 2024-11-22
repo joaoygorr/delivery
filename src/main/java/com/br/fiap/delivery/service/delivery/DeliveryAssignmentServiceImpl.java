@@ -1,5 +1,6 @@
 package com.br.fiap.delivery.service.delivery;
 
+import com.br.fiap.delivery.exceptions.Exception404;
 import com.br.fiap.delivery.module.Delivery;
 import com.br.fiap.delivery.module.Driver;
 import com.br.fiap.delivery.repository.DeliveryRepository;
@@ -20,10 +21,9 @@ public class DeliveryAssignmentServiceImpl implements DeliveryAssignmentService 
     }
 
     @Override
-    public Delivery assignDelivery(Long orderId, String destinationAddress) {
+    public Delivery assignDelivery(String destinationAddress) {
         Driver availableDriver = driverRepository.findByAvailableTrue().stream().findFirst().orElseThrow(
-                () -> new RuntimeException("Nenhum entregador disponível.")
-        );
+                () -> new Exception404("Nenhum entregador disponível."));
 
         availableDriver.setAvailable(false);
         driverRepository.save(availableDriver);

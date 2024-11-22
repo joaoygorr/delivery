@@ -32,8 +32,8 @@ public class DeliveryController {
     @PostMapping("/assign")
     @Operation(summary = "Assign a new delivery",
             description = "Assigns a new delivery to an available driver based on the provided order ID and destination address.")
-    public ResponseEntity<DeliveryDTO> assignDelivery(@RequestParam Long orderId, @RequestParam String destinationAddress) {
-        Delivery delivery = deliveryAssignmentService.assignDelivery(orderId, destinationAddress);
+    public ResponseEntity<DeliveryDTO> assignDelivery(@RequestParam String destinationAddress) {
+        Delivery delivery = deliveryAssignmentService.assignDelivery(destinationAddress);
         return ResponseEntity.ok(DeliveryDTO.toDto(delivery));
     }
 

@@ -19,14 +19,4 @@ public record DeliveryDTO(Long id,
                 delivery.getDestinationAddress()
         );
     }
-
-    public static Delivery toEntity(DeliveryDTO deliveryDTO) {
-        return new Delivery(
-                deliveryDTO.id(),
-                DriverDTO.toEntity(deliveryDTO.driver()),
-                deliveryDTO.status(),
-                deliveryDTO.estimatedDeliveryTime(),
-                deliveryDTO.destinationAddress()
-        );
-    }
 }

@@ -1,5 +1,6 @@
 package com.br.fiap.delivery.service.tracking;
 
+import com.br.fiap.delivery.exceptions.Exception404;
 import com.br.fiap.delivery.module.Delivery;
 import com.br.fiap.delivery.module.Location;
 import com.br.fiap.delivery.repository.DeliveryRepository;
@@ -25,7 +26,7 @@ public class TrackingServiceImpl implements TrackingService {
     @Override
     public Location updateLocation(Long deliveryId, double latitude, double longitude) {
         Delivery delivery = deliveryRepository.findById(deliveryId)
-                .orElseThrow(() -> new RuntimeException("Entrega não encontrada"));
+                .orElseThrow(() -> new Exception404("Entrega não encontrada"));
 
         Location location = new Location();
         location.setDelivery(delivery);
