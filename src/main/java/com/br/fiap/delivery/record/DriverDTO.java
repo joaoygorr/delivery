@@ -17,14 +17,4 @@ public record DriverDTO(Long id,
                 driver.getAvailable()
         );
     }
-
-    public static Driver toEntity(DriverDTO driverDTO) {
-        return new Driver(
-                driverDTO.id(),
-                driverDTO.name(),
-                driverDTO.vehicle(),
-                driverDTO.phoneNumber(),
-                driverDTO.available()
-        );
-    }
 }
