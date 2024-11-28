@@ -20,6 +20,7 @@ public class Location {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "id_delivery")
     private Delivery delivery;
 
     private double latitude;

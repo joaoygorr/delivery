@@ -20,6 +20,7 @@ public class Delivery {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "id_driver")
     private Driver driver;
 
     private String status;

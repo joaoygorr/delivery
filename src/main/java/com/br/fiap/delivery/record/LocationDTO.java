@@ -19,14 +19,4 @@ public record LocationDTO(Long id,
                 location.getTimestamp()
         );
     }
-
-    public static Location toEntity(LocationDTO locationDTO) {
-        return new Location(
-                locationDTO.id(),
-                DeliveryDTO.toEntity(locationDTO.delivery()),
-                locationDTO.latitude(),
-                locationDTO.longitude(),
-                locationDTO.timestamp()
-        );
-    }
 }

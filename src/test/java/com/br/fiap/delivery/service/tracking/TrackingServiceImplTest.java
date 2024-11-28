@@ -17,6 +17,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.br.fiap.delivery.exceptions.Exception404;
 import com.br.fiap.delivery.mock.DeliveryMock;
 import com.br.fiap.delivery.mock.LocationMock;
 import com.br.fiap.delivery.module.Location;
@@ -64,7 +65,7 @@ class TrackingServiceImplTest {
     void testUpdateLocationNotFoundDriver() {
         when(this.deliveryRepository.findById(anyLong())).thenReturn(Optional.empty());
 
-        final var response = assertThrows(RuntimeException.class,
+        final var response = assertThrows(Exception404.class,
                 () -> this.trackingServiceImpl.updateLocation(1L, 0, 0));
 
         assertNotNull(response);
