@@ -43,7 +43,7 @@ class DeliveryAssignmentServiceImplTest {
         when(driverRepository.findByAvailableTrue()).thenReturn(List.of(DriverMock.build()));
         when(deliveryRepository.save(any(Delivery.class))).thenReturn(DeliveryMock.build());
 
-        final var response = this.deliveryAssignmentServiceImpl.assignDelivery("");
+        final var response = this.deliveryAssignmentServiceImpl.assignDelivery("", "");
 
         assertNotNull(response);
     }
@@ -54,7 +54,7 @@ class DeliveryAssignmentServiceImplTest {
         when(driverRepository.findByAvailableTrue()).thenReturn(List.of());
 
         final var response = assertThrows(RuntimeException.class,
-                () -> this.deliveryAssignmentServiceImpl.assignDelivery(""));
+                () -> this.deliveryAssignmentServiceImpl.assignDelivery("", ""));
 
         assertNotNull(response);
         assertEquals("Nenhum entregador disponível.", response.getMessage());
