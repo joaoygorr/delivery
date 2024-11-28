@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface DriverRepository extends JpaRepository<Driver, Long> {
     List<Driver> findByAvailableTrue();
+ 
+    List<Driver> findDriversByName(String name);
 }
