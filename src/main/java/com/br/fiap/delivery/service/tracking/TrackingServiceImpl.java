@@ -24,9 +24,10 @@ public class TrackingServiceImpl implements TrackingService {
     }
 
     @Override
-    public Location updateLocation(Long deliveryId, double latitude, double longitude) {
+    public Location updateLocation(Long deliveryId, double latitude, double longitude, boolean isDelivered) {
         Delivery delivery = deliveryRepository.findById(deliveryId)
                 .orElseThrow(() -> new Exception404("Entrega não encontrada"));
+        delivery.setDelivered(isDelivered);
 
         Location location = new Location();
         location.setDelivery(delivery);

@@ -30,25 +30,27 @@ public class DeliveryController {
     }
 
     @PostMapping("/assign")
-    @Operation(summary = "Assign a new delivery",
-            description = "Assigns a new delivery to an available driver based on the provided order ID and destination address.")
-    public ResponseEntity<DeliveryDTO> assignDelivery(@RequestParam String destinationAddress, @RequestParam String pedidoId) {
+    @Operation(summary = "Assign a new delivery", description = "Assigns a new delivery to an available driver based on the provided order ID and destination address.")
+    public ResponseEntity<DeliveryDTO> assignDelivery(
+            @RequestParam String destinationAddress,
+            @RequestParam String pedidoId) {
         Delivery delivery = deliveryAssignmentService.assignDelivery(destinationAddress, pedidoId);
         return ResponseEntity.ok(DeliveryDTO.toDto(delivery));
     }
 
     @PutMapping("/track/{deliveryId}")
-    @Operation(summary = "Update delivery location",
-            description = "Updates the current location of a delivery in progress based on the delivery ID, latitude, and longitude.")
-    public ResponseEntity<LocationDTO> updateLocation(@PathVariable Long deliveryId,
-                                                      @RequestParam double latitude, @RequestParam double longitude) {
-        Location location = trackingService.updateLocation(deliveryId, latitude, longitude);
+    @Operation(summary = "Update delivery location", description = "Updates the current location of a delivery in progress based on the delivery ID, latitude, and longitude.")
+    public ResponseEntity<LocationDTO> updateLocation(
+            @PathVariable Long deliveryId,
+            @RequestParam double latitude,
+            @RequestParam double longitude,
+            @RequestParam boolean isDelivered) {
+        Location location = trackingService.updateLocation(deliveryId, latitude, longitude, isDelivered);
         return ResponseEntity.ok(LocationDTO.toDto(location));
     }
 
     @GetMapping("/track/{deliveryId}")
-    @Operation(summary = "Get delivery tracking locations",
-            description = "Retrieves all tracking locations for a specific delivery, based on the delivery ID.")
+    @Operation(summary = "Get delivery tracking locations", description = "Retrieves all tracking locations for a specific delivery, based on the delivery ID.")
     public ResponseEntity<List<LocationDTO>> getDeliveryLocations(@PathVariable Long deliveryId) {
         List<Location> locations = trackingService.getDeliveryLocations(deliveryId);
         List<LocationDTO> locationDTOs = locations.stream()

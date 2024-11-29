@@ -31,4 +31,6 @@ public class Delivery {
 
     private String destinationAddress;
 
+    private boolean isDelivered;
+
 }

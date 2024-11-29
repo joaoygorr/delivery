@@ -66,6 +66,7 @@ class DeliveryTestIntegration extends AbstractIntegrationTest {
                 .header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
                 .queryParam("latitude", -23.550520)
                 .queryParam("longitude", -46.633308)
+                .queryParam("isDelivered", true)
                 .when().put("/{deliveryId}", 1L).then()
                 .statusCode(200)
                 .extract().body().asString();

@@ -56,7 +56,7 @@ class TrackingServiceImplTest {
         when(this.deliveryRepository.findById(anyLong())).thenReturn(Optional.of(DeliveryMock.build()));
         when(this.locationRepository.save(any(Location.class))).thenReturn(LocationMock.build());
 
-        final var response = this.trackingServiceImpl.updateLocation(1L, 0, 0);
+        final var response = this.trackingServiceImpl.updateLocation(1L, 0, 0, false);
 
         assertNotNull(response);
     }
@@ -66,7 +66,7 @@ class TrackingServiceImplTest {
         when(this.deliveryRepository.findById(anyLong())).thenReturn(Optional.empty());
 
         final var response = assertThrows(Exception404.class,
-                () -> this.trackingServiceImpl.updateLocation(1L, 0, 0));
+                () -> this.trackingServiceImpl.updateLocation(1L, 0, 0, true));
 
         assertNotNull(response);
         assertEquals("Entrega não encontrada", response.getMessage());
