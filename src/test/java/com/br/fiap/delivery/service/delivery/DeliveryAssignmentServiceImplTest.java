@@ -14,7 +14,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.br.fiap.delivery.exceptions.Exception404;
 import com.br.fiap.delivery.mock.DeliveryMock;
 import com.br.fiap.delivery.mock.DriverMock;
 import com.br.fiap.delivery.module.Delivery;

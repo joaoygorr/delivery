@@ -1,18 +1,19 @@
 package com.br.fiap.delivery.integration.test;
 
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 
 import static io.restassured.RestAssured.given;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.Assert.assertNotNull;
 
-import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.br.fiap.delivery.integration.config.TestConfigs;
 import com.br.fiap.delivery.integration.containers.AbstractIntegrationTest;
+import com.br.fiap.delivery.record.NewDriverDTO;
 
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
@@ -23,16 +24,16 @@ import io.restassured.specification.RequestSpecification;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestMethodOrder(OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class DeliveryTestIntegration extends AbstractIntegrationTest {
-
+public class DriverTestIntegration extends AbstractIntegrationTest {
+    
     private static RequestSpecification specification;
 
     @Test
     @Order(0)
-    void assignDelivery() {
+    void saveDriver() {
         specification = new RequestSpecBuilder()
                 .addHeader(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
-                .setBasePath("/api/delivery/assign")
+                .setBasePath("/api/driver")
                 .setPort(TestConfigs.SERVER_PORT)
                 .addFilter(new RequestLoggingFilter(LogDetail.ALL))
                 .addFilter(new ResponseLoggingFilter(LogDetail.ALL))
@@ -41,8 +42,7 @@ class DeliveryTestIntegration extends AbstractIntegrationTest {
         final var response = given().spec(specification)
                 .contentType(TestConfigs.CONTENT_TYPE_JSON)
                 .header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
-                .queryParam("destinationAddress", "Rua das Flores, 123")
-                .queryParam("pedidoId", "1")
+                .body(new NewDriverDTO("teste", "teste", "40028922"))
                 .when().post().then()
                 .statusCode(200)
                 .extract().body().asString();
@@ -51,34 +51,11 @@ class DeliveryTestIntegration extends AbstractIntegrationTest {
     }
 
     @Test
-    @Order(1)
-    void updateLocation() {
-        specification = new RequestSpecBuilder()
-                .addHeader(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
-                .setBasePath("/api/delivery/track")
-                .setPort(TestConfigs.SERVER_PORT)
-                .addFilter(new RequestLoggingFilter(LogDetail.ALL))
-                .addFilter(new ResponseLoggingFilter(LogDetail.ALL))
-                .build();
-
-        final var response = given().spec(specification)
-                .contentType(TestConfigs.CONTENT_TYPE_JSON)
-                .header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
-                .queryParam("latitude", -23.550520)
-                .queryParam("longitude", -46.633308)
-                .when().put("/{deliveryId}", 1L).then()
-                .statusCode(200)
-                .extract().body().asString();
-
-        assertNotNull(response);
-    }
-    
-    @Test
     @Order(2)
-    void getDeliveryLocations() {
+    void findDriversByName() {
         specification = new RequestSpecBuilder()
                 .addHeader(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
-                .setBasePath("/api/delivery/track")
+                .setBasePath("/api/driver")
                 .setPort(TestConfigs.SERVER_PORT)
                 .addFilter(new RequestLoggingFilter(LogDetail.ALL))
                 .addFilter(new ResponseLoggingFilter(LogDetail.ALL))
@@ -87,11 +64,11 @@ class DeliveryTestIntegration extends AbstractIntegrationTest {
         final var response = given().spec(specification)
                 .contentType(TestConfigs.CONTENT_TYPE_JSON)
                 .header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
-                .when().get("/{deliveryId}", 1L).then()
+                .queryParam("driverName", "teste")
+                .when().get().then()
                 .statusCode(200)
                 .extract().body().asString();
 
         assertNotNull(response);
     }
-    
 }

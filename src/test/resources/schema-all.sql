@@ -13,6 +13,7 @@ CREATE TABLE public.delivery (
 	id_driver int8 NULL,
 	destination_address varchar(255) NULL,
 	status varchar(255) NULL,
+	pedidoId varchar(255),
 	CONSTRAINT delivery_pkey PRIMARY KEY (id_delivery),
 	CONSTRAINT delivery_driver FOREIGN KEY (id_driver) REFERENCES public.driver(id_driver)
 );
@@ -37,13 +38,13 @@ VALUES
   (FALSE, 'Pedro Souza', '955444333', 'Moto - Ducati Monster');
 
 -- Inserts para a tabela delivery
-INSERT INTO public.delivery (estimated_delivery_time, id_driver, destination_address, status) 
+INSERT INTO public.delivery (estimated_delivery_time, id_driver, destination_address, status, pedidoId) 
 VALUES
-  ('2024-11-23 10:00:00', 1, 'Rua das Flores, 123', 'Em andamento'),
-  ('2024-11-23 12:30:00', 2, 'Av. Brasil, 456', 'Aguardando coleta'),
-  ('2024-11-23 14:15:00', 3, 'Rua São Paulo, 789', 'Entregue'),
-  ('2024-11-23 16:45:00', 4, 'Praça Central, 101', 'Em andamento'),
-  ('2024-11-23 18:00:00', 5, 'Rua Rio de Janeiro, 202', 'Cancelada');
+  ('2024-11-23 10:00:00', 1, 'Rua das Flores, 123', 'Em andamento', '1'),
+  ('2024-11-23 12:30:00', 2, 'Av. Brasil, 456', 'Aguardando coleta', '2'),
+  ('2024-11-23 14:15:00', 3, 'Rua São Paulo, 789', 'Entregue', '3'),
+  ('2024-11-23 16:45:00', 4, 'Praça Central, 101', 'Em andamento', '4'),
+  ('2024-11-23 18:00:00', 5, 'Rua Rio de Janeiro, 202', 'Cancelada', '5');
 
 -- Inserts para a tabela location
 INSERT INTO public."location" (latitude, longitude, id_delivery, "timestamp") 

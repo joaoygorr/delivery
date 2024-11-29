@@ -32,6 +32,7 @@ public class DeliveryAssignmentServiceImpl implements DeliveryAssignmentService 
         delivery.setDriver(availableDriver);
         delivery.setStatus("ATRIBUIDA");
         delivery.setDestinationAddress(destinationAddress);
+        delivery.setPedidoId(pedidoId);
 
         return deliveryRepository.save(delivery);
     }

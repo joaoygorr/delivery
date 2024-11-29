@@ -23,6 +23,8 @@ public class Delivery {
     @JoinColumn(name = "id_driver")
     private Driver driver;
 
+    private String pedidoId;
+
     private String status;
 
     private LocalDateTime estimatedDeliveryTime;
