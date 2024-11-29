@@ -1,6 +1,6 @@
 services:
-  java_db:
-    container_name: java_db
+  delivery-postgres:
+    container_name: delivery-postgres
     restart: always
     image: postgres
 
@@ -20,6 +20,6 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - java_db
+      - delivery-postgres
     environment:
       - SPRING_PROFILES_ACTIVE=docker
