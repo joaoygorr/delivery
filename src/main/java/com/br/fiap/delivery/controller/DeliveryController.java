@@ -13,7 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -32,14 +34,18 @@ public class DeliveryController {
 
     @PostMapping("/assign")
     @Operation(summary = "Assign a new delivery", description = "Assigns a new delivery to an available driver based on the provided order ID and destination address.")
-    public ResponseEntity<DeliveryDTO> assignDelivery(
+    public ResponseEntity<?> assignDelivery(
             @RequestParam String destinationAddress,
             @RequestParam String pedidoId) {
         try{
             Delivery delivery = deliveryAssignmentService.assignDelivery(destinationAddress, pedidoId);
             return ResponseEntity.ok(DeliveryDTO.toDto(delivery));
         }catch (HttpClientErrorException e){
-            throw e;
+            Map<String, String> responseBody = new HashMap<>();
+            responseBody.put("error", "Unprocessable Entity");
+            responseBody.put("message", "O pedido não existe.");
+
+            return ResponseEntity.unprocessableEntity().body(responseBody);
         }
         
     }
