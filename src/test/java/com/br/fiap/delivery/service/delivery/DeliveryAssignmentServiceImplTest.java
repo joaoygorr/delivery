@@ -31,10 +31,13 @@ class DeliveryAssignmentServiceImplTest {
     @Mock
     private DeliveryRepository deliveryRepository;
 
+    @Mock
+    private UpdateOrderService updateOrderService;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        deliveryAssignmentServiceImpl = new DeliveryAssignmentServiceImpl(driverRepository, deliveryRepository);
+        deliveryAssignmentServiceImpl = new DeliveryAssignmentServiceImpl(driverRepository, deliveryRepository, updateOrderService);
     }
 
     @Test

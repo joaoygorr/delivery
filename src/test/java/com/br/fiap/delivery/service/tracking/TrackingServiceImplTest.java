@@ -23,6 +23,7 @@ import com.br.fiap.delivery.mock.LocationMock;
 import com.br.fiap.delivery.module.Location;
 import com.br.fiap.delivery.repository.DeliveryRepository;
 import com.br.fiap.delivery.repository.LocationRepository;
+import com.br.fiap.delivery.service.delivery.UpdateOrderService;
 
 class TrackingServiceImplTest {
 
@@ -35,10 +36,14 @@ class TrackingServiceImplTest {
     @Mock
     private DeliveryRepository deliveryRepository;
 
+    @Mock
+    private UpdateOrderService updateOrderService;
+    
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        trackingServiceImpl = new TrackingServiceImpl(locationRepository, deliveryRepository);
+        trackingServiceImpl = new TrackingServiceImpl(locationRepository, deliveryRepository, updateOrderService);
     }
 
     @Test

@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,8 +35,13 @@ public class DeliveryController {
     public ResponseEntity<DeliveryDTO> assignDelivery(
             @RequestParam String destinationAddress,
             @RequestParam String pedidoId) {
-        Delivery delivery = deliveryAssignmentService.assignDelivery(destinationAddress, pedidoId);
-        return ResponseEntity.ok(DeliveryDTO.toDto(delivery));
+        try{
+            Delivery delivery = deliveryAssignmentService.assignDelivery(destinationAddress, pedidoId);
+            return ResponseEntity.ok(DeliveryDTO.toDto(delivery));
+        }catch (HttpClientErrorException e){
+            throw e;
+        }
+        
     }
 
     @PutMapping("/track/{deliveryId}")
