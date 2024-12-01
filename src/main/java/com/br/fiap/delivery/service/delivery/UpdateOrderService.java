@@ -9,7 +9,6 @@ import java.net.http.HttpResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.br.fiap.delivery.exceptions.Exception404;
 
